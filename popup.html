@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      width: 280px; padding: 12px; margin: 0;
+      font-size: 13px; color: #111;
+    }
+    .preview {
+      display: none; gap: 10px; align-items: center;
+      margin-bottom: 12px; padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    .preview img {
+      width: 56px; height: 56px; object-fit: contain;
+      border: 1px solid #ddd; border-radius: 6px;
+      background: #fafafa; flex-shrink: 0;
+    }
+    .preview-info { flex: 1; min-width: 0; }
+    #sourceLabel { font-weight: 600; margin-bottom: 4px; }
+    #resetLink {
+      font-size: 11px; color: #0078d4; cursor: pointer;
+      text-decoration: underline; background: none; border: 0; padding: 0;
+    }
+    #resetLink[hidden] { display: none; }
+
+    .row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .switch { position: relative; width: 42px; height: 22px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; inset: 0; cursor: pointer;
+      background: #ccc; border-radius: 22px; transition: 0.2s;
+    }
+    .slider:before {
+      content: ""; position: absolute; height: 16px; width: 16px;
+      left: 3px; top: 3px; background: white; border-radius: 50%;
+      transition: 0.2s;
+    }
+    input:checked + .slider { background: #25d366; }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    button.primary {
+      display: none;
+      width: 100%; padding: 8px 10px; border: none; border-radius: 6px;
+      background: #25d366; color: white; font-weight: 600;
+      cursor: pointer; font-size: 13px;
+    }
+    button.primary:disabled { background: #ccc; cursor: not-allowed; }
+    button.secondary {
+      padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px;
+      background: #fff; cursor: pointer; font-size: 13px;
+    }
+
+    #replaceBtn[hidden] { display: none; }
+
+    #hint {
+      display: none !important;
+      font-size: 10px; color: #888; margin-top: 6px;
+      text-align: center; min-height: 12px;
+    }
+    #status {
+      display: none !important;
+      font-size: 11px; color: #555; margin-top: 8px;
+      text-align: center; min-height: 14px; word-break: break-word;
+    }
+
+    #pinPanel {
+      margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid #eee;
+    }
+    #pinPanel[hidden] { display: none; }
+    #pinLabel {
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 6px; display: block;
+    }
+    #pinInput {
+      width: 100%; padding: 8px; font-size: 14px;
+      border: 1px solid #ccc; border-radius: 6px;
+      letter-spacing: 4px; text-align: center;
+    }
+    #pinInput:focus { outline: 2px solid #25d366; outline-offset: -1px; }
+    .pin-row { display: flex; gap: 8px; margin-top: 8px; }
+    .pin-row button { flex: 1; }
+    #pinError {
+      font-size: 11px; color: #d33; margin-top: 6px;
+      text-align: center; min-height: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <img id="qrPreview" alt="Current QR" />
+    <div class="preview-info">
+      <div id="sourceLabel">Default (GitHub)</div>
+      <button id="resetLink" hidden>Reset to GitHub</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <span>Enable Performance Optimization</span>
+    <label class="switch">
+      <input type="checkbox" id="toggle" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <button id="replaceBtn" class="primary">Replace repo image with canvas</button>
+  <div id="hint"></div>
+
+  <div id="pinPanel" hidden>
+    <label id="pinLabel" for="pinInput">Enter PIN to confirm</label>
+    <input id="pinInput" type="password" inputmode="numeric"
+           maxlength="20" autocomplete="off" />
+    <div class="pin-row">
+      <button id="pinCancel" class="secondary" type="button">Cancel</button>
+      <button id="pinConfirm" class="primary" type="button">Confirm</button>
+    </div>
+    <div id="pinError"></div>
+  </div>
+
+  <div id="status"></div>
+
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
